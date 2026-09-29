@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Great+Vibes&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-lavender: #c084fc;
+  --primary-lavender-dark: #7e22ce;
+  --rose-blush: #fda4af;
+  --rose-deep: #f43f5e;
+  --cream-soft: #fdfaf6;
+  --bg-dark-dream: #0d0914;
+  --bg-card-glass: rgba(26, 17, 39, 0.7);
+  --border-glass: rgba(216, 180, 254, 0.2);
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-handwritten: 'Caveat', cursive;
+  --font-serif: 'Playfair Display', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-dark-dream);
+  color: #fdf2f8;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  user-select: none;
+  scroll-behavior: smooth;
+}
+
+/* Background Magical Dreamscape */
+.dream-background {
+  background: radial-gradient(circle at 50% 10%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 10% 80%, rgba(244, 63, 94, 0.12) 0%, transparent 40%),
+              radial-gradient(circle at 90% 60%, rgba(192, 132, 252, 0.15) 0%, transparent 45%),
+              linear-gradient(180deg, #09060e 0%, #130d1f 50%, #08050c 100%);
+}
+
+/* Glassmorphic Panel */
+.glass-panel {
+  background: var(--bg-card-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5),
+              0 0 20px -5px rgba(192, 132, 252, 0.15);
+  border-radius: 1.5rem;
+}
+
+.glass-panel-subtle {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+/* Romantic Glow Effects */
+.glow-lavender {
+  box-shadow: 0 0 25px rgba(192, 132, 252, 0.35);
+}
+
+.glow-rose {
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.35);
+}
+
+.text-gradient-rose {
+  background: linear-gradient(135deg, #fbcfe8 0%, #fda4af 50%, #f43f5e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-lavender {
+  background: linear-gradient(135deg, #f5d0fe 0%, #d8b4fe 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fef08a 0%, #fde047 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Typography styles */
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-handwritten {
+  font-family: var(--font-handwritten);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(244, 63, 94, 0.8), 0 0 60px rgba(192, 132, 252, 0.4); }
+}
+
+@keyframes rotateVinyl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.15); }
+  70% { transform: scale(1); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s ease-in-out infinite;
+}
+
+.animate-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+.animate-vinyl {
+  animation: rotateVinyl 12s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Buttons */
+.btn-romantic {
+  background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+  color: white;
+  border-radius: 9999px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.btn-romantic:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(236, 72, 153, 0.55);
+}
+
+.btn-romantic:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-secondary-romantic {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fdf2f8;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.btn-secondary-romantic:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(216, 180, 254, 0.4);
+}
+
+/* Custom Envelope Styling */
+.envelope-wrapper {
+  perspective: 1000px;
+}
+
+.envelope-card {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(13, 9, 20, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(192, 132, 252, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(192, 132, 252, 0.6);
+}
+
+/* Florist Bouquet Styling & Layers */
+.bouquet-stage-container {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 290px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .bouquet-stage-container {
+    max-width: 360px;
+    height: 320px;
+  }
+}
+
+.bouquet-wrapper-paper {
+  position: absolute;
+  bottom: 0px;
+  width: 140px;
+  height: 125px;
+  background: linear-gradient(175deg, rgba(168, 85, 247, 0.45) 0%, rgba(219, 39, 119, 0.4) 40%, rgba(88, 28, 135, 0.75) 100%);
+  clip-path: polygon(8% 0%, 92% 0%, 65% 100%, 35% 100%);
+  border-bottom: 2px solid rgba(244, 114, 182, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 2px 10px rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  z-index: 20;
+}
+
+.bouquet-ribbon-bow {
+  position: absolute;
+  bottom: 50px;
+  z-index: 25;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes bloomLayer {
+  0% {
+    transform: scale(0.2) translateY(30px) rotate(0deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.15) translateY(-6px) rotate(var(--target-rot, 0deg));
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0px) rotate(var(--target-rot, 0deg));
+    opacity: 1;
+  }
+}
+
+.flower-blooming {
+  animation: bloomLayer 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Romantic Range Slider Styling */
+.romantic-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.18);
+  outline: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.romantic-slider:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.romantic-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f43f5e, #c084fc);
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.7);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: 2px solid #ffffff;
+}
+
+.romantic-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 16px rgba(244, 63, 94, 1);
+}
+
+.romantic-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f43f5e, #c084fc);
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.7);
+  cursor: pointer;
+  border: 2px solid #ffffff;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

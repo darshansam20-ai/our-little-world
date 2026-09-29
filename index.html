@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Our Little World ❤️ — Coco × Modak</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="A magical interactive digital love universe made with all my heart by Darshan for his Chanchal (Coco & Modak).">
+  <meta name="theme-color" content="#130d1f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Our Little World ❤️ — Coco × Modak">
+  <meta property="og:description" content="A tiny magical universe created by Darshan for Chanchal.">
+  <meta property="og:type" content="website">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lavender: {
+              300: '#d8b4fe',
+              400: '#c084fc',
+              500: '#a855f7',
+              600: '#9333ea',
+              700: '#7e22ce',
+              900: '#3b0764',
+            },
+            rose: {
+              400: '#fb7185',
+              500: '#f43f5e',
+              600: '#e11d48',
+            },
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body class="dream-background min-h-screen text-pink-50 relative selection:bg-pink-500 selection:text-white pb-24">
+  
+  <!-- Main Application Root -->
+  <main id="app-root" class="relative z-10 w-full min-h-screen"></main>
+
+  <!-- Main ES Module Application -->
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
