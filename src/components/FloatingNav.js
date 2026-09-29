@@ -2,9 +2,11 @@ import { audioManager } from "../utils/audioManager.js";
 import { spawnHeartBurst } from "../utils/particles.js";
 
 export class FloatingNavComponent {
-  constructor({ activeChapter, onNavigate, onOpenAchievements, onOpenDailyNote, onResetJourney, achievementsCount, totalAchievements }) {
+  constructor({ activeChapter, unlockedChapters, onNavigate, onLockedClick, onOpenAchievements, onOpenDailyNote, onResetJourney, achievementsCount, totalAchievements }) {
     this.activeChapter = activeChapter;
+    this.unlockedChapters = Array.isArray(unlockedChapters) ? unlockedChapters : ["landing"];
     this.onNavigate = onNavigate;
+    this.onLockedClick = onLockedClick;
     this.onOpenAchievements = onOpenAchievements;
     this.onOpenDailyNote = onOpenDailyNote;
     this.onResetJourney = onResetJourney;
@@ -43,11 +45,15 @@ export class FloatingNavComponent {
 
         <!-- Chapter Icons Quick Scroll -->
         <div class="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-[240px] px-1 py-1">
-          ${chapters.map(c => `
-            <button data-chapter="${c.id}" class="nav-chapter-btn flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all ${this.activeChapter === c.id ? 'bg-pink-500 text-white shadow-[0_0_12px_rgba(244,63,94,0.6)] scale-110' : 'bg-white/5 text-purple-200 hover:bg-white/15'}" title="${c.label}">
-              ${c.icon}
-            </button>
-          `).join("")}
+          ${chapters.map(c => {
+            const isUnlocked = this.unlockedChapters.includes(c.id);
+            const isActive = this.activeChapter === c.id;
+            return `
+              <button data-chapter="${c.id}" data-unlocked="${isUnlocked}" class="nav-chapter-btn flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all cursor-pointer ${isActive ? 'bg-pink-500 text-white shadow-[0_0_12px_rgba(244,63,94,0.6)] scale-110' : isUnlocked ? 'bg-white/5 text-purple-200 hover:bg-white/15' : 'bg-white/5 text-purple-400/40 opacity-40'}" title="${c.label} ${isUnlocked ? '' : '(Locked)'}">
+                ${isUnlocked ? c.icon : '🔒'}
+              </button>
+            `;
+          }).join("")}
         </div>
 
         <!-- Controls: Music, Achievements, Daily Note -->
@@ -84,12 +90,17 @@ export class FloatingNavComponent {
           <button id="nav-drawer-close" class="text-xs text-purple-300 hover:text-white px-2 py-1 bg-white/10 rounded-md">Close ✕</button>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-60 overflow-y-auto pr-1">
-          ${chapters.map(c => `
-            <button data-chapter="${c.id}" class="nav-drawer-item flex items-center gap-2.5 p-2 rounded-xl text-left text-xs transition-all ${this.activeChapter === c.id ? 'bg-gradient-to-r from-pink-500/30 to-purple-500/30 border border-pink-400/50 text-white font-semibold' : 'bg-white/5 hover:bg-white/10 text-purple-200'}">
-              <span class="text-base">${c.icon}</span>
-              <span class="truncate">${c.label}</span>
-            </button>
-          `).join("")}
+          ${chapters.map(c => {
+            const isUnlocked = this.unlockedChapters.includes(c.id);
+            const isActive = this.activeChapter === c.id;
+            return `
+              <button data-chapter="${c.id}" data-unlocked="${isUnlocked}" class="nav-drawer-item flex items-center gap-2.5 p-2 rounded-xl text-left text-xs transition-all cursor-pointer ${isActive ? 'bg-gradient-to-r from-pink-500/30 to-purple-500/30 border border-pink-400/50 text-white font-semibold' : isUnlocked ? 'bg-white/5 hover:bg-white/10 text-purple-200' : 'bg-white/5 opacity-40 text-purple-400/50'}">
+                <span class="text-base">${isUnlocked ? c.icon : '🔒'}</span>
+                <span class="truncate">${c.label}</span>
+                ${!isUnlocked ? '<span class="text-[9px] text-pink-300/50 ml-auto uppercase tracking-wider font-semibold">Locked</span>' : ''}
+              </button>
+            `;
+          }).join("")}
         </div>
         <div class="pt-3 mt-3 border-t border-white/10 flex items-center justify-between">
           <button id="nav-reset-journey-btn" class="text-[11px] text-rose-300/80 hover:text-rose-200 underline cursor-pointer">
@@ -105,6 +116,16 @@ export class FloatingNavComponent {
       nav.querySelectorAll(".nav-chapter-btn, .nav-drawer-item").forEach(btn => {
         btn.addEventListener("click", (e) => {
           const ch = btn.getAttribute("data-chapter");
+          const isUnlocked = btn.getAttribute("data-unlocked") === "true";
+          if (!isUnlocked) {
+            audioManager.playRomanticTone(220, 0.2, "sine", 0.08);
+            const drawer = document.getElementById("nav-drawer-modal");
+            if (drawer) drawer.classList.add("hidden");
+            if (this.onLockedClick) {
+              this.onLockedClick(ch);
+            }
+            return;
+          }
           if (ch && this.onNavigate) {
             audioManager.playRomanticTone(440, 0.4);
             const rect = btn.getBoundingClientRect();

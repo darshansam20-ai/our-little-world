@@ -5,8 +5,7 @@
 const STORAGE_KEY = "our_little_world_darshan_chanchal_v1";
 
 const DEFAULT_STATE = {
-  unlockedChapters: ["landing", "story", "bouquet", "letter", "kiss", "compliments", "quiz", "memories", "music", "heart-catcher", "surprise", "final"],
-  // Start with progressive unlock mode but allow easy exploration
+  unlockedChapters: ["landing"],
   activeChapter: "landing",
   kissCount: 0,
   quizCompleted: false,
@@ -45,12 +44,32 @@ export class StorageManager {
     }
   }
 
+  static resetGameProgress(currentSettings = {}) {
+    const freshState = {
+      ...DEFAULT_STATE,
+      unlockedChapters: ["landing"],
+      activeChapter: "landing",
+      kissCount: 0,
+      quizCompleted: false,
+      quizScore: 0,
+      bouquet: ["rose", "tulip", "lavender"],
+      heartHighScore: 0,
+      easterEggsFound: [],
+      achievements: [],
+      hasAcceptedSurprise: false,
+      hasReceivedBouquet: false,
+      hasOpenedLetter: false,
+      storyProgressIndex: 0,
+      musicMuted: currentSettings.musicMuted !== undefined ? currentSettings.musicMuted : false,
+      sfxMuted: currentSettings.sfxMuted !== undefined ? currentSettings.sfxMuted : false,
+      visitedAt: new Date().toISOString(),
+    };
+    StorageManager.save(freshState);
+    return freshState;
+  }
+
   static reset() {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (e) {
-      console.warn("Could not reset localStorage", e);
-    }
-    return { ...DEFAULT_STATE };
+    return StorageManager.resetGameProgress();
   }
 }
+

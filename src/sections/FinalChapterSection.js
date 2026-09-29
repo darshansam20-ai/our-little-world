@@ -110,10 +110,10 @@ export class FinalChapterSectionComponent {
 
         <!-- Start Story Again & Celebrate -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button id="final-replay-btn" class="btn-secondary-romantic text-xs sm:text-sm py-3 px-6 w-full sm:w-auto">
-            ↺ Start Our Story Again
+          <button id="final-replay-btn" class="btn-secondary-romantic text-xs sm:text-sm py-3 px-6 w-full sm:w-auto cursor-pointer">
+            Play It Again 💗
           </button>
-          <button id="final-celebrate-btn" class="btn-romantic text-xs sm:text-sm py-3 px-8 w-full sm:w-auto shadow-[0_0_25px_rgba(244,63,94,0.7)]">
+          <button id="final-celebrate-btn" class="btn-romantic text-xs sm:text-sm py-3 px-8 w-full sm:w-auto shadow-[0_0_25px_rgba(244,63,94,0.7)] cursor-pointer">
             <span>Shower Love & Hearts</span>
             <span>💖</span>
           </button>

@@ -109,12 +109,14 @@ export class OurLittleWorldApp {
 
     this.navInstance = new FloatingNavComponent({
       activeChapter: this.state.activeChapter,
+      unlockedChapters: this.state.unlockedChapters,
       achievementsCount: this.state.achievements.length,
       totalAchievements: ACHIEVEMENTS.length,
       onNavigate: (ch) => this.navigateTo(ch),
+      onLockedClick: () => this.showToast("Chapter Locked 🔒", "Unlock this chapter by following our story journey! ✨", "🌸"),
       onOpenAchievements: () => this.openAchievementsModal(),
       onOpenDailyNote: () => this.openDailyNoteModal(),
-      onResetJourney: () => this.restartJourney(),
+      onResetJourney: () => this.resetGameProgress(),
     });
 
     document.body.appendChild(this.navInstance.render());
@@ -131,13 +133,20 @@ export class OurLittleWorldApp {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  restartJourney() {
-    this.state = StorageManager.reset();
-    this.state.activeChapter = "landing";
-    this.saveState();
+  resetGameProgress() {
+    const currentMute = {
+      musicMuted: this.state ? !!this.state.musicMuted : false,
+      sfxMuted: this.state ? !!this.state.sfxMuted : false,
+    };
+    this.state = StorageManager.resetGameProgress(currentMute);
     this.renderSection("landing");
     this.renderNav();
-    this.showToast("Fresh Start ❤️", "Welcome back to the beginning of our story.", "✨");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    this.showToast("Fresh Start ❤️", "Welcome back to the beginning of our story, my Princess.", "✨");
+  }
+
+  restartJourney() {
+    this.resetGameProgress();
   }
 
   openAchievementsModal() {
