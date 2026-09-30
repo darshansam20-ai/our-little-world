@@ -8,9 +8,52 @@ export class ComplimentsSectionComponent {
     this.onNextSection = onNextSection;
     this.infiniteIndex = 0;
     this.clickCount = 0;
+    this.typingTimer = null;
+    this.fadeTimer = null;
+  }
+
+  stopAnimation() {
+    if (this.typingTimer) {
+      clearTimeout(this.typingTimer);
+      this.typingTimer = null;
+    }
+    if (this.fadeTimer) {
+      clearTimeout(this.fadeTimer);
+      this.fadeTimer = null;
+    }
+  }
+
+  typeReason(displayEl, fullText) {
+    // 1. Cancel previous animations/timers
+    this.stopAnimation();
+
+    if (!displayEl) return;
+
+    // 2. Remove/clear previous reason completely
+    displayEl.textContent = "";
+    displayEl.style.opacity = "1";
+
+    let charIndex = 0;
+    const totalChars = fullText.length;
+
+    // 3. Render ONLY the new reason character by character smoothly
+    const typeNextChar = () => {
+      if (charIndex < totalChars) {
+        charIndex++;
+        displayEl.textContent = fullText.slice(0, charIndex);
+        this.typingTimer = setTimeout(typeNextChar, 18);
+      } else {
+        this.typingTimer = null;
+      }
+    };
+
+    typeNextChar();
   }
 
   render() {
+    // Clean up any lingering timers on re-render
+    this.stopAnimation();
+
     const section = document.createElement("section");
     section.id = "section-compliments";
     section.className = "min-h-screen flex flex-col items-center justify-center p-4 md:p-6 relative z-10 animate-fadeIn";
@@ -38,14 +81,14 @@ export class ComplimentsSectionComponent {
           </h3>
 
           <!-- Active Reason Display Box -->
-          <div class="min-h-[90px] p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-5">
-            <p id="infinite-reason-display" class="text-sm sm:text-base font-handwritten text-purple-100 font-bold leading-relaxed transition-opacity duration-200">
+          <div class="min-h-[110px] sm:min-h-[120px] p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-5 w-full overflow-hidden text-center">
+            <p id="infinite-reason-display" class="w-full text-center text-base sm:text-lg md:text-xl font-handwritten text-purple-100 font-bold leading-relaxed tracking-wide select-none break-words whitespace-normal">
               “${REAL_REASONS[0]}”
             </p>
           </div>
 
           <!-- Progressive Generator Status Subtitle -->
-          <div id="infinite-status-tag" class="text-[11px] text-pink-300/80 font-medium mb-4 h-4"></div>
+          <div id="infinite-status-tag" class="text-[11px] text-pink-300/80 font-medium mb-4 min-h-[1rem] flex items-center justify-center"></div>
 
           <!-- Action Button: Give Me A Reason -->
           <button id="infinite-generate-btn" class="btn-romantic text-xs sm:text-sm py-3 px-6 shadow-[0_0_20px_rgba(236,72,153,0.5)] cursor-pointer">
@@ -106,11 +149,8 @@ export class ComplimentsSectionComponent {
           audioManager.playRomanticTone(440 + (this.clickCount % 8) * 30, 0.4);
           spawnHeartBurst(e.clientX, e.clientY, 8, ["❤️", "♾️", "💖", "✨"]);
 
-          display.style.opacity = "0";
-          setTimeout(() => {
-            display.innerText = `“${INFINITE_REASONS[this.infiniteIndex]}”`;
-            display.style.opacity = "1";
-          }, 150);
+          const nextReason = `“${INFINITE_REASONS[this.infiniteIndex]}”`;
+          this.typeReason(display, nextReason);
 
           if (statusTag) {
             if (this.clickCount === 5) statusTag.innerText = "Still asking? 🥰";
@@ -140,3 +180,4 @@ export class ComplimentsSectionComponent {
     return section;
   }
 }
+
